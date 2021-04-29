@@ -60,22 +60,34 @@ def fetchBoardIDs(list_of_urls):
     return boards, cards
 
 def getBoardMembers(board_id):
+    if board_id is not None:
+        users = []
+        board_url = "https://api.trello.com/1/boards/" + board_id + '/members'
+        board_response = requests.request("GET", board_url, headers=headers, params=query)
+        try:
+            data = json.loads(board_response.text)
 
-    users = []
-    board_url = "https://api.trello.com/1/boards/" + board_id + '/members'
-    board_response = requests.request("GET", board_url, headers=headers, params=query)
-    data = json.loads(board_response.text)
+            for user in data:
+                users.append(user["id"])
+            
+            return users
 
-    for user in data:
-        users.append(user["id"])
-    
-    return users
+        except:
+            pass
+
+    else:
+        print("An error occurred.")
 
 def getBoardFromCard(card_id):  
     card_url = "https://api.trello.com/1/cards/" + card_id + '/board'
     card_response = requests.request("GET", card_url, headers=headers, params=query)
-    data = json.loads(card_response.text)["id"]
-    return data
+    if card_response.text is not None:
+        try:
+            data = json.loads(card_response.text)
+            if data:
+                return data["id"]
+        except:
+            pass
 
 def GetMemberBoards(member_id):
     memberBoards = []
@@ -98,7 +110,9 @@ def trelloSearch(ids, outputFile):
         getBoardMembers(board_id)
 
     for card_id in cards:
-        userList += getBoardMembers(getBoardFromCard(card_id))
+        users = getBoardMembers(getBoardFromCard(card_id))
+        if users is not None:
+            userList += users
 
     userList = list(set(userList)) 
 
