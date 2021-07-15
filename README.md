@@ -1,7 +1,7 @@
 # trellodorker
-A tool I developed to automate part of the Trello dorking process.
+A tool developed to automate part of the Trello dorking process.
 
-Trellodorker is a command-line tool. It automatically Google-dorks for public Trello boards, then fetches all members of the first 10 exposed boards, and returns all of the boards that those members are on. It is effectively an automated first degree search of Trello. By fetching the boards that those members are on, you are able to access boards that may not have been indexed by Google.
+Trellodorker is a command-line tool. It automatically Google-dorks for public Trello boards, then fetches all members of the first 10 exposed boards, and returns all of the boards that those members are on. By doing this, you are able to access boards that are public, but may not be indexed by Google.
 
 ## Installation
 
